@@ -4,17 +4,18 @@ import com.project.splitwise.exceptions.InvalidRequestException;
 import com.project.splitwise.models.*;
 import com.project.splitwise.repositories.GroupExpenseRepository;
 import com.project.splitwise.repositories.GroupRepository;
+import com.project.splitwise.strategies.settle_up.SettleUpStrategy;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 public class SettleUpServiceImpl implements SettleUpService{
     
     private GroupRepository groupRepository;
     private GroupExpenseRepository groupExpenseRepository;
+    private SettleUpStrategy settleUpStrategy;
     
     @Override
     public List<Transaction> settleGroup(int groupId) throws InvalidRequestException {
@@ -36,6 +37,6 @@ public class SettleUpServiceImpl implements SettleUpService{
 
 
 
-        return List.of();
+        return settleUpStrategy.settleUp(userTotal);
     }
 }

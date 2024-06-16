@@ -5,6 +5,7 @@ import com.project.splitwise.models.User;
 import org.aspectj.weaver.GeneratedReferenceTypeDelegate;
 import org.springframework.data.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -25,8 +26,29 @@ public class TwoHeapSettleUpStrategy implements SettleUpStrategy{
                 minHeap.add(Pair.of(entry.getKey(),entry.getValue()));
             }
         }
+        List<Transaction> transactions = new ArrayList<>();
+        while(!minHeap.isEmpty()&& !maxHeap.isEmpty()){
+
+            Pair<User, Double> userToPay = minHeap.poll();
+            Pair<User, Double>  userToGetMoney  = maxHeap.poll();
+            double amountToBeTransferred  = Math.min(Math.abs(userToPay.getSecond()), userToGetMoney.getSecond());
+             Transaction transaction=new Transaction();
+             transaction.setAmount(amountToBeTransferred);
+             transaction.setPaidFrom(userToPay.getFirst());
+             transaction.setPaidTo(userToGetMoney.getFirst());
+             transactions.add(transaction);
+
+             if(userToGetMoney.getSecond()-amountToBeTransferred>0){
+                 maxHeap.add(Pair.of(userToGetMoney.getFirst(),userToGetMoney.getSecond()-amountToBeTransferred));
+             }
+             if(userToPay.getSecond()+amountToBeTransferred<0){
+                 minHeap.add(Pair.of(userToPay.getFirst(),userToPay.getSecond()+amountToBeTransferred));
+
+             }
+        }
 
 
-        return List.of();
+
+        return transactions;
     }
 }
