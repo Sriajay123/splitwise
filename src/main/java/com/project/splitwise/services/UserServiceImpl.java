@@ -4,6 +4,7 @@ import com.project.splitwise.exceptions.RegisterUserException;
 import com.project.splitwise.models.User;
 import com.project.splitwise.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,7 +28,9 @@ public class UserServiceImpl implements UserService{
         }
         User user=new User();
         user.setUserName(userName);
-        user.setPassword(password);
+        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+        String encoderPassword  = encoder.encode(password);
+        user.setPassword(encoderPassword );
         user.setPhoneNumber(phoneNumber);
         return userRepository.save(user);
     }

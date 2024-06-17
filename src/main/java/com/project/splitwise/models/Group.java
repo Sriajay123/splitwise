@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name="group_s")
 public class Group extends BaseModel {
     private String name;
     private String description;

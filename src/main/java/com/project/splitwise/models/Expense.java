@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Expense {
+public class Expense extends BaseModel{
     private double amount;
     private Date addedAt;
     private String description;

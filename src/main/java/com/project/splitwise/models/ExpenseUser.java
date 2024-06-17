@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class ExpenseUser {
+public class ExpenseUser extends BaseModel {
     @ManyToOne
     private Expense expense;
     @ManyToOne

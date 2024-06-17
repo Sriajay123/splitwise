@@ -5,12 +5,13 @@ import com.project.splitwise.models.*;
 import com.project.splitwise.repositories.GroupExpenseRepository;
 import com.project.splitwise.repositories.GroupRepository;
 import com.project.splitwise.strategies.settle_up.SettleUpStrategy;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Service
 public class SettleUpServiceImpl implements SettleUpService{
     
     private GroupRepository groupRepository;
@@ -21,7 +22,7 @@ public class SettleUpServiceImpl implements SettleUpService{
     public List<Transaction> settleGroup(int groupId) throws InvalidRequestException {
 
      Group group=groupRepository.findById(groupId).orElseThrow(() ->new InvalidRequestException("Invalid group id"));
-        List<GroupExpense> groupExpenses = groupExpenseRepository.findAllByGroupid(groupId);
+        List<GroupExpense> groupExpenses = groupExpenseRepository.findAllByGroupId(groupId);
         List<Expense> expenses = groupExpenses.stream().map(GroupExpense::getExpense).toList();
 
         Map<User, Double> userTotal = new HashMap<>();

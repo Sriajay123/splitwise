@@ -6,9 +6,11 @@ import com.project.splitwise.dtos.SettleGroupResponseDto;
 import com.project.splitwise.exceptions.InvalidRequestException;
 import com.project.splitwise.models.Transaction;
 import com.project.splitwise.services.SettleUpService;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+@Controller
 public class SettleUpController {
 
    private  SettleUpService settleUpService;

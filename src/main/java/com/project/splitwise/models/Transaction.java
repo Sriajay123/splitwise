@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Transaction {
+public class Transaction extends BaseModel {
 
     @ManyToOne
     private User paidFrom;
